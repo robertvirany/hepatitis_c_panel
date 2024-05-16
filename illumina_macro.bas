@@ -147,9 +147,9 @@ Sub delete_unwanted_columns_3()
     Selection.Delete Shift:=xlToLeft
     Range("A1").Select
 End Sub
-Sub select_unwanted_columns()
+Sub delete_unwanted_columns()
 '
-' select_unwanted_columns Macro
+' delete_unwanted_columns Macro
 '
 
 '
@@ -163,16 +163,18 @@ Sub select_unwanted_columns()
 '    End With
 '    Rng.Select
     
-'    Range("1:1").Select
     Dim rng2 As Range
     Set rng2 = FindAll(Range("1:1"), "p-value", xlValues, xlPart)
-'    rng2.Select
     Dim rng3 As Range
     Set rng3 = FindAll(Range("1:1"), "type", xlValues, xlPart)
+    
     With ActiveSheet
         Set Rng = Union(rng2, rng3)
     End With
+    
     Rng.Select
+    ActiveSheet.Range(Selection, Selection).EntireColumn.Select
+'    Selection.Delete Shift:=Left
     
     
     
