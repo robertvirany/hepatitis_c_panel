@@ -188,3 +188,29 @@ Sub add_adjusted_score_columns()
 '    ActiveCell.Columns("A:A").EntireColumn.Select
 
 End Sub
+Sub adjscore_formulas()
+'
+' adjscore_formulas Macro
+'
+
+'
+    ActiveCell.Offset(1, 5).Range("A1").Select
+    ActiveCell.FormulaR1C1 = "=IF(RC[2]<0,RC[1]*-1,RC[1])"
+    ActiveCell.Select
+    Selection.AutoFill Destination:=ActiveCell.Range("A1:A5000")
+    ActiveCell.Range("A1:A5000").Select
+    Selection.Copy
+    ActiveCell.Offset(0, 3).Range("A1").Select
+    ActiveSheet.Paste
+    ActiveCell.Offset(0, 3).Range("A1").Select
+    ActiveSheet.Paste
+    ActiveCell.Offset(0, 3).Range("A1").Select
+    ActiveSheet.Paste
+    ActiveCell.Offset(0, 3).Range("A1").Select
+    ActiveSheet.Paste
+    ActiveCell.Offset(0, 3).Range("A1").Select
+    ActiveSheet.Paste
+    ActiveCell.Offset(0, 3).Range("A1").Select
+    ActiveSheet.Paste
+    ActiveCell.Offset(-1, -23).Range("A1").Select
+End Sub
