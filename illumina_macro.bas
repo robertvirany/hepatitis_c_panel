@@ -214,3 +214,10 @@ Sub adjscore_formulas()
     ActiveSheet.Paste
     ActiveCell.Offset(-1, -23).Range("A1").Select
 End Sub
+
+Sub select_data()
+
+Range("A1").CurrentRegion.Select
+
+
+End Sub
