@@ -172,9 +172,8 @@ Sub delete_unwanted_columns()
         Set Rng = Union(rng2, rng3)
     End With
     
-    Rng.Select
-    ActiveSheet.Range(Selection, Selection).EntireColumn.Select
-'    Selection.Delete Shift:=Left
+    Rng.EntireColumn.Select
+    Selection.Delete
     
     
     
