@@ -1,6 +1,6 @@
 Sub remove_nondata_rows()
 '
-' remove_nondata_rows Macro
+' removes nondata rows
 '
 
 '
@@ -13,5 +13,12 @@ Sub remove_nondata_rows()
     Selection.Delete Shift:=xlUp
 
 
-End Sub
+'
+' bolds header
+'
 
+'
+    Rows("1:1").Select
+    Selection.Font.Bold = True
+    Range("A1").Select
+End Sub
