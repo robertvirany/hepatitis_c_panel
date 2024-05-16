@@ -130,21 +130,9 @@ Sub remove_nondata_rows()
 
 '
 ' bolds header
-'
 
-'
     Rows("1:1").Select
     Selection.Font.Bold = True
-    Range("A1").Select
-End Sub
-Sub delete_unwanted_columns_3()
-'
-' delete_unwanted_columns Macro
-'
-
-'
-    Columns("G:H").Select
-    Selection.Delete Shift:=xlToLeft
     Range("A1").Select
 End Sub
 Sub delete_unwanted_columns()
@@ -153,15 +141,6 @@ Sub delete_unwanted_columns()
 '
 
 '
-
-'    Dim rng2 As Range
-'    Set rng2 = Range("1:1").Find("p-value", , xlValues, xlPart)
-'    Dim rng3 As Range
-'    Set rng3 = Range("1:1").Find("type", , xlValues, xlPart)
-'    With ActiveSheet
-'        Set Rng = Union(rng2, rng3)
-'    End With
-'    Rng.Select
     
     Dim rng2 As Range
     Set rng2 = FindAll(Range("1:1"), "p-value", xlValues, xlPart)
@@ -174,10 +153,38 @@ Sub delete_unwanted_columns()
     
     Rng.EntireColumn.Select
     Selection.Delete
-    
-    
-    
+    Range("A1").Select
     
 End Sub
 
 
+Sub add_adjusted_score_columns()
+'
+' add_adjusted_score_columns Macro
+'
+
+'
+
+    Dim rng4 As Range
+    Set rng4 = FindAll(Range("1:1"), "Score", xlValues, xlPart, , True)
+    
+    rng4.EntireColumn.Select
+    Selection.Insert Shift:=xlToRight
+    
+    
+    rng4.Select
+    Dim rng5 As Range
+    Set rng5 = rng4.Offset(0, -1)
+    rng5.Select
+    
+    
+    Selection.Formula = "Adjusted Score"
+    Selection.EntireColumn.Interior.Color = 65535
+    
+'    Selection.Interior.Color = 65535
+    
+'    ActiveCell.Select
+'    ActiveCell.FormulaR1C1 = "Adjusted Score"
+'    ActiveCell.Columns("A:A").EntireColumn.Select
+
+End Sub
