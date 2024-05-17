@@ -316,7 +316,6 @@ Sub move_scores_to_final()
 '
     Sheets("analysis worksheet").Select
     Range("A1").Select
-    Selection.End(xlToRight).Select
     
     Dim Rng7 As Range
     Set Rng7 = FindAll(Range("1:1"), "Adjusted Score", xlValues, xlPart, , True)
@@ -338,7 +337,6 @@ Sub move_scores_to_final()
         i = i + 1
     Next c
         
-    
     
     
     
