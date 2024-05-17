@@ -197,24 +197,16 @@ Sub add_adjusted_score_columns()
     rng5.Select
     Set rng6 = rng5.Offset(1, 0)
     rng6.Select
+
     
-    Dim lRow As Long
-    lRow = Cells(Rows.Count, "A").End(xlUp).Row
-    
-    Selection.Resize(lRow,).Select
-    
-    
-'    Selection.Formula = "=IF(RC[2]<0,RC[1]*-1,RC[1])"
-    
-'    Selection.AutoFill Destination:=ActiveCell.Range("A1:A" & lRow)
+    Dim ws As Worksheet, lastR As Long
+  
+    Set ws = ActiveSheet
+    lastR = ws.Range("A" & ws.Rows.Count).End(xlUp).Row
+    Intersect(Selection.EntireColumn, ws.Rows(Selection.Row & ":" & lastR)).Formula = _
+                                                          "=IF(RC[2]<0,RC[1]*-1,RC[1])"
     
     
-    
-    
-    
-'    ActiveCell.Select
-'    Selection.AutoFill Destination:=ActiveCell.Range("A1:A5000")
-'    ActiveCell.Range("A1:A5000").Select
-'    ActiveCell.Offset(-1, -23).Range("A1").Select
+    Range("A1").Select
 End Sub
 
