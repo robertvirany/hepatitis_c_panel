@@ -67,7 +67,7 @@ Next Area
 Set LastCell = SearchRange.Worksheet.Cells(MaxRow, MaxCol)
 
 On Error GoTo 0
-Set FoundCell = SearchRange.Find(what:=FindWhat, _
+Set FoundCell = SearchRange.Find(What:=FindWhat, _
         after:=LastCell, _
         LookIn:=LookIn, _
         LookAt:=XLookAt, _
@@ -134,6 +134,15 @@ Sub remove_nondata_rows()
     Rows("1:1").Select
     Selection.Font.Bold = True
     Range("A1").Select
+    
+' replaces blanks with 0s
+    
+    Range("A1").CurrentRegion.Select
+    Selection.Replace What:="", Replacement:="0", LookAt:=xlWhole, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False, FormulaVersion:=xlReplaceFormula2
+    Range("A1").Select
+    
 End Sub
 Sub delete_unwanted_columns()
 '
@@ -215,9 +224,3 @@ Sub adjscore_formulas()
     ActiveCell.Offset(-1, -23).Range("A1").Select
 End Sub
 
-Sub select_data()
-
-Range("A1").CurrentRegion.Select
-
-
-End Sub
