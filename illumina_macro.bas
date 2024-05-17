@@ -308,4 +308,52 @@ Sub move_biosets_to_final()
     ActiveSheet.Paste
 End Sub
 
+Sub move_scores_to_final()
+'
+' move_scores_to_final Macro
+'
+
+'
+    Sheets("analysis worksheet").Select
+    Range("A1").Select
+    Selection.End(xlToRight).Select
+    
+    Dim Rng7 As Range
+    Set Rng7 = FindAll(Range("1:1"), "Adjusted Score", xlValues, xlPart, , True)
+    
+    Rng7.Select
+    
+    Dim c As Range, sel As Range, i As Integer
+    i = 1
+    Set sel = Selection
+    
+    For Each c In sel.Cells
+        c.Select
+        c.Offset(1, 0).Select
+        Range(Selection, Selection.End(xlDown)).Select
+        Selection.Copy
+        Sheets("final worksheet").Select
+        Range("A1").Offset(i, 12).Select
+        Selection.PasteSpecial Paste:=xlValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=True
+        i = i + 1
+    Next c
+        
+    
+    
+    
+    
+'    Dim biosets As String
+'    biosets = Selection.Substring(Selection.Length - 1)
+'    MsgBox (biosets)
+    
+'    Range("X2").Select
+'    Range(Selection, Selection.End(xlDown)).Select
+'    Selection.Copy
+'    Sheets("final worksheet").Select
+'    Range("A1").Select
+'    Selection.End(xlDown).Select
+'    Range("M8").Select
+'    Selection.PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:= _
+'        False, Transpose:=True
+End Sub
 
