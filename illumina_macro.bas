@@ -68,7 +68,7 @@ Set LastCell = SearchRange.Worksheet.Cells(MaxRow, MaxCol)
 
 On Error GoTo 0
 Set FoundCell = SearchRange.Find(What:=FindWhat, _
-        after:=LastCell, _
+        After:=LastCell, _
         LookIn:=LookIn, _
         LookAt:=XLookAt, _
         SearchOrder:=SearchOrder, _
@@ -99,7 +99,7 @@ If Not FoundCell Is Nothing Then
                 Set ResultRange = Application.Union(ResultRange, FoundCell)
             End If
         End If
-        Set FoundCell = SearchRange.FindNext(after:=FoundCell)
+        Set FoundCell = SearchRange.FindNext(After:=FoundCell)
         If (FoundCell Is Nothing) Then
             Exit Do
         End If
@@ -187,7 +187,18 @@ Sub add_adjusted_score_columns()
     rng5.Select
     
     
-    Selection.Formula = "Adjusted Score"
+    Dim c As Range, sel As Range, i As Integer
+    i = 1
+    
+    Set sel = Selection
+    
+    For Each c In sel.Cells
+        c.Formula = "Adjusted Score " & i
+        i = i + 1
+    Next c
+        
+    
+'    Selection.Formula = "Adjusted Score"
     Selection.EntireColumn.Interior.Color = 65535
 
 '
@@ -209,4 +220,92 @@ Sub add_adjusted_score_columns()
     
     Range("A1").Select
 End Sub
+
+Sub make_analysis_worksheet()
+'
+' make_analysis_worksheet Macro
+'
+
+'
+    
+    Sheets(1).Copy After:=Worksheets(Worksheets.Count)
+    Sheets(Worksheets.Count).Name = "analysis worksheet"
+End Sub
+Sub make_final_worksheet()
+'
+' make_final_worksheet Macro
+'
+
+'
+    Sheets.Add After:=Worksheets(Worksheets.Count)
+    Sheets(Worksheets.Count).Name = "final worksheet"
+    
+End Sub
+Sub populate_final_worksheet()
+'
+' populate_final_worksheet Macro
+'
+
+'
+    Range("A1").Select
+    ActiveCell.FormulaR1C1 = "Gene"
+    Range("B1").Select
+    ActiveCell.FormulaR1C1 = "GEO"
+    Range("C1").Select
+    ActiveCell.FormulaR1C1 = "Virus"
+    Range("D1").Select
+    ActiveCell.FormulaR1C1 = "Disease Type"
+    Range("E1").Select
+    ActiveCell.FormulaR1C1 = "Disease Severity"
+    Range("F1").Select
+    ActiveCell.FormulaR1C1 = "Comparison"
+    Range("G1").Select
+    ActiveCell.FormulaR1C1 = "Weeks P.I."
+    Range("H1").Select
+    ActiveCell.FormulaR1C1 = "Biosource"
+    Range("I1").Select
+    ActiveCell.FormulaR1C1 = "Tissue Type"
+    Range("J1").Select
+    ActiveCell.FormulaR1C1 = "GEO Link"
+    Range("K1").Select
+    ActiveCell.FormulaR1C1 = "Samples"
+    Range("L1").Select
+    ActiveCell.FormulaR1C1 = "Platform"
+    Range("A1").Select
+End Sub
+Sub move_gene_col_to_final()
+'
+' move_gene_col_to_final Macro
+'
+
+'
+    Sheets("analysis worksheet").Select
+    Range("A2").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.Copy
+    Sheets("final worksheet").Select
+    Range("M1").Select
+    Selection.PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:= _
+        False, Transpose:=True
+    Range("A1").Select
+End Sub
+Sub move_biosets_to_final()
+'
+' move_biosets_to_final Macro
+'
+
+'
+    Sheets(1).Select
+    Range("A1").Select
+    Cells.Find(What:="https", After:=ActiveCell, LookIn:=xlValues, LookAt:= _
+        xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, _
+        SearchFormat:=False).Activate
+    Selection.Offset(-1, 0).Select
+    Range("A2", Selection).Select
+    Selection.Copy
+    Sheets("final worksheet").Select
+    Range("A2").Select
+    ActiveSheet.Paste
+End Sub
+
 
