@@ -327,15 +327,16 @@ Sub move_scores_to_final()
     Set sel = Selection
     
     For Each c In sel.Cells
-        c.Select
-        c.Offset(1, 0).Select
-        Range(Selection, Selection.End(xlDown)).Select
-        Selection.Copy
+'        c.Select
+'        c.Offset(1, 0).Select
+        Range(c.Offset(1, 0), c.Offset(1, 0).End(xlDown)).Copy
+'        Selection.Copy
         Sheets("final worksheet").Select
         Range("A1").Offset(i, 12).Select
         Selection.PasteSpecial Paste:=xlValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=True
         i = i + 1
     Next c
+    Range("A1").Select
         
     
     
