@@ -113,9 +113,10 @@ End If
 Set FindAll = ResultRange
 
 End Function
+
 Sub remove_nondata_rows()
 '
-' removes nondata rows
+
 '
 
 '
@@ -247,6 +248,7 @@ Sub populate_final_worksheet()
 '
 
 '
+    Sheets("final worksheet").Select
     Range("A1").Select
     ActiveCell.FormulaR1C1 = "Gene"
     Range("B1").Select
@@ -355,4 +357,3 @@ Sub move_scores_to_final()
 '    Selection.PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:= _
 '        False, Transpose:=True
 End Sub
-
