@@ -114,12 +114,25 @@ Set FindAll = ResultRange
 
 End Function
 
-Sub remove_nondata_rows()
-'
+Sub prepare_illumina_data()
 
-'
+'Sub make_analysis_worksheet()
+    
+    Sheets(1).Copy After:=Worksheets(Worksheets.Count)
+    Sheets(Worksheets.Count).Name = "analysis worksheet"
+'End Sub
 
-'
+'Sub make_final_worksheet()
+
+    Sheets.Add After:=Worksheets(Worksheets.Count)
+    Sheets(Worksheets.Count).Name = "final worksheet"
+    
+'End Sub
+
+'Sub remove_nondata_rows()
+
+    Sheets("analysis worksheet").Select
+
     Range("A1").Select
     Dim rng1 As Range
     Set rng1 = Range("A:A").Find("https", , xlValues, xlPart)
@@ -129,7 +142,6 @@ Sub remove_nondata_rows()
     Selection.Delete Shift:=xlUp
 
 
-'
 ' bolds header
 
     Rows("1:1").Select
@@ -144,13 +156,9 @@ Sub remove_nondata_rows()
         ReplaceFormat:=False, FormulaVersion:=xlReplaceFormula2
     Range("A1").Select
     
-End Sub
-Sub delete_unwanted_columns()
-'
-' delete_unwanted_columns Macro
-'
+'End Sub
 
-'
+'Sub delete_unwanted_columns()
     
     Dim rng2 As Range
     Set rng2 = FindAll(Range("1:1"), "p-value", xlValues, xlPart)
@@ -165,15 +173,9 @@ Sub delete_unwanted_columns()
     Selection.Delete
     Range("A1").Select
     
-End Sub
+'End Sub
 
-
-Sub add_adjusted_score_columns()
-'
-' add_adjusted_score_columns Macro
-'
-
-'
+'Sub add_adjusted_score_columns()
 
     Dim rng4 As Range
     Set rng4 = FindAll(Range("1:1"), "Score", xlValues, xlPart, , True)
@@ -198,13 +200,11 @@ Sub add_adjusted_score_columns()
         i = i + 1
     Next c
         
-    
-'    Selection.Formula = "Adjusted Score"
+
     Selection.EntireColumn.Interior.Color = 65535
 
-'
 ' adjscore_formulas Macro
-'
+
 
     rng5.Select
     Set rng6 = rng5.Offset(1, 0)
@@ -220,34 +220,10 @@ Sub add_adjusted_score_columns()
     
     
     Range("A1").Select
-End Sub
+'End Sub
 
-Sub make_analysis_worksheet()
-'
-' make_analysis_worksheet Macro
-'
+'Sub populate_final_worksheet()
 
-'
-    
-    Sheets(1).Copy After:=Worksheets(Worksheets.Count)
-    Sheets(Worksheets.Count).Name = "analysis worksheet"
-End Sub
-Sub make_final_worksheet()
-'
-' make_final_worksheet Macro
-'
-
-'
-    Sheets.Add After:=Worksheets(Worksheets.Count)
-    Sheets(Worksheets.Count).Name = "final worksheet"
-    
-End Sub
-Sub populate_final_worksheet()
-'
-' populate_final_worksheet Macro
-'
-
-'
     Sheets("final worksheet").Select
     Range("A1").Select
     ActiveCell.FormulaR1C1 = "Gene"
@@ -274,13 +250,10 @@ Sub populate_final_worksheet()
     Range("L1").Select
     ActiveCell.FormulaR1C1 = "Platform"
     Range("A1").Select
-End Sub
-Sub move_gene_col_to_final()
-'
-' move_gene_col_to_final Macro
-'
+'End Sub
 
-'
+'Sub move_gene_col_to_final()
+
     Sheets("analysis worksheet").Select
     Range("A2").Select
     Range(Selection, Selection.End(xlDown)).Select
@@ -290,13 +263,10 @@ Sub move_gene_col_to_final()
     Selection.PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:= _
         False, Transpose:=True
     Range("A1").Select
-End Sub
-Sub move_biosets_to_final()
-'
-' move_biosets_to_final Macro
-'
+'End Sub
 
-'
+'Sub move_biosets_to_final()
+
     Sheets(1).Select
     Range("A1").Select
     Cells.Find(What:="https", After:=ActiveCell, LookIn:=xlValues, LookAt:= _
@@ -308,14 +278,10 @@ Sub move_biosets_to_final()
     Sheets("final worksheet").Select
     Range("A2").Select
     ActiveSheet.Paste
-End Sub
+'End Sub
 
-Sub move_scores_to_final()
-'
-' move_scores_to_final Macro
-'
+'Sub move_scores_to_final()
 
-'
     Sheets("analysis worksheet").Select
     Range("A1").Select
     
@@ -324,36 +290,21 @@ Sub move_scores_to_final()
     
     Rng7.Select
     
-    Dim c As Range, sel As Range, i As Integer
-    i = 1
-    Set sel = Selection
+    Dim c2 As Range, sel2 As Range, i2 As Integer
+    i2 = 1
+    Set sel2 = Selection
     
-    For Each c In sel.Cells
-'        c.Select
-'        c.Offset(1, 0).Select
-        Range(c.Offset(1, 0), c.Offset(1, 0).End(xlDown)).Copy
-'        Selection.Copy
+    For Each c2 In sel2.Cells
+        Range(c2.Offset(1, 0), c2.Offset(1, 0).End(xlDown)).Copy
         Sheets("final worksheet").Select
-        Range("A1").Offset(i, 12).Select
+        Range("A1").Offset(i2, 12).Select
         Selection.PasteSpecial Paste:=xlValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=True
-        i = i + 1
-    Next c
+        i2 = i2 + 1
+    Next c2
     Range("A1").Select
         
+'End Sub
     
-    
-    
-'    Dim biosets As String
-'    biosets = Selection.Substring(Selection.Length - 1)
-'    MsgBox (biosets)
-    
-'    Range("X2").Select
-'    Range(Selection, Selection.End(xlDown)).Select
-'    Selection.Copy
-'    Sheets("final worksheet").Select
-'    Range("A1").Select
-'    Selection.End(xlDown).Select
-'    Range("M8").Select
-'    Selection.PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:= _
-'        False, Transpose:=True
+
+
 End Sub
